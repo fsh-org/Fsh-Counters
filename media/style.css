@@ -1,8 +1,32 @@
+.modal-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+}
+hr {
+  border: 1px var(--bg-1) solid;
+  margin: 6px 0px;
+}
 .inline {
   display: flex;
+  align-items: center;
 }
 .inline h1 {
   flex: 1;
+  height: 40px;
+}
+#add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+  border-radius: 25%;
 }
 #section {
   display: flex;
@@ -10,14 +34,80 @@
   flex-wrap: wrap;
 }
 #section div {
+  position: relative;
   flex: 1 1 calc(25% - 5px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: min(10dvh, 200px);
+  color: var(--txt);
+  padding: 10px 0px;
   border-radius: 0.5rem;
   background-color: var(--color);
 }
+#section .name {
+  cursor: pointer;
+  position: absolute;
+  inset: unset 0px;
+  top: 6px;
+}
+#section .num {
+  cursor: pointer;
+  position: absolute;
+  inset: unset 0px;
+  bottom: 10px;
+  display: flex;
+  max-width: 35%;
+  font-family: monospace;
+  font-size: 175%;
+  font-weight: bold;
+  overflow: hidden;
+}
+#section .num input {
+  font-size: 100%;
+  width: 100%;
+  min-width: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+#section .inline {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  width: min(calc(100% - 10px), 50dvw);
+}
 #section button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--txt);
+  width: 30px;
+  height: 30px;
+  border-color: currentColor;
+  border-radius: 2rem;
+}
+
+#dialog .con {
+  display: flex;
+}
+#dialog .con label {
   flex: 1;
-  margin-inline: 5px;
+  display: flex;
+  flex-direction: column;
+}
+#dialog .con input {
+  width: 100px;
+  min-width: 0px;
+  margin: 0px 2px;
+}
+#dialog .del {
+  font-weight: bold;
+  color: var(--red-1);
+  border-color: var(--red-1);
+}
+#dialog .del:hover {
+  color: var(--bg-1);
+  background-color: var(--red-1);
 }
