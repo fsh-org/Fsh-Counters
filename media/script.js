@@ -29,6 +29,16 @@ function display() {
     let name = con.querySelector('.name');
     let time;
     let sep = 150;
+    let debounce;
+    let save = ()=>{
+      if (debounce) clearInterval(debounce);
+      debounce = setInterval(()=>{
+        debounce = null;
+        let tx = db.transaction(['counters'], 'readwrite');
+        let cstore = tx.objectStore('counters');
+        cstore.put(counter);
+      }, 200);
+    };
     let change = (am)=>{
       let number = counter.num+am;
       if (counter.max&&number>counter.max) number = counter.max;
@@ -38,6 +48,7 @@ function display() {
       clearTimeout(time);
       time = setTimeout(()=>{change(am)}, sep);
       sep = sep*0.8;
+      save();
     };
     down.onpointerdown = ()=>{
       change(0n-counter.step);
@@ -66,6 +77,7 @@ function display() {
       input.onblur = ()=>{
         counter.num = BigInt(input.value);
         num.innerText = counter.num;
+        save();
       };
     };
     name.onclick = ()=>{
@@ -77,6 +89,9 @@ function display() {
       dialog.querySelector('.color').value = counter.color;
       dialog.querySelector('.del').onclick = ()=>{
         counters = counters.filter(c=>c.id!==counter.id);
+        let tx = db.transaction(['counters'], 'readwrite');
+        let cstore = tx.objectStore('counters');
+        cstore.delete(counter.id);
         dialog.close();
       };
       dialog.showModal();
@@ -89,6 +104,7 @@ function display() {
         counter.max = dialog.querySelector('.max').value;
         counter.max = counter.max===''?null:BigInt(counter.max);
         counter.color = dialog.querySelector('.color').value;
+        save();
         display();
       };
     };
@@ -97,15 +113,38 @@ function display() {
 const colors = 'red,yellow,green,blue,purple,black'.split(',');
 let coloridx = 0;
 add.onclick = ()=>{
-  counters.push({
-    id: Math.floor(Math.random()*(16**6)).toString(16),
+  let obj = {
     name: 'Counter '+(coloridx+1),
     color: colors[coloridx%colors.length],
     num: 0n,
     step: 1n,
     min: null,
     max: null
-  });
+  };
   coloridx++;
-  display();
+  let tx = db.transaction(['counters'], 'readwrite');
+  let cstore = tx.objectStore('counters');
+  let creq = cstore.put(obj);
+  creq.onsuccess = ()=>{
+    obj.id = creq.result;
+    counters.push(obj);
+    display();
+  };
 };
+let dbRequest = indexedDB.open('data', 1);
+dbRequest.onupgradeneeded = (evt)=>{
+  let db = evt.target.result;
+  if (!db.objectStoreNames.contains('counters')) db.createObjectStore('counters', { keyPath: 'id', autoIncrement: true });
+};
+dbRequest.onsuccess = (evt)=>{
+  let db = evt.target.result;
+  window.db = db;
+  let tx = db.transaction(['counters'], 'readonly');
+  let cstore = tx.objectStore('counters');
+  let creq = cstore.getAll();
+  creq.onsuccess = () => {
+    counters = creq.result;
+    coloridx = counters.length;
+    display();
+  };
+}
