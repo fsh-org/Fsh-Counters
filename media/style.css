@@ -44,18 +44,26 @@ hr {
   padding: 10px 0px;
   border-radius: 0.5rem;
   background-color: var(--color);
+  content-visibility: auto;
 }
 #section .name {
   cursor: pointer;
 }
+#section .inline {
+  container-type: inline-size;
+  justify-content: space-around;
+  width: min(calc(100% - 10px), 50dvw);
+}
 #section .num {
   cursor: pointer;
-  display: flex;
-  max-width: 35%;
+  display: block;
+  max-width: 70cqw;
   font-family: monospace;
   font-size: 50px;
   font-weight: bold;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #section .num input {
   font-size: inherit;
@@ -64,10 +72,6 @@ hr {
   margin: 0px;
   padding: 0px;
   outline: none;
-}
-#section .inline {
-  justify-content: space-around;
-  width: min(calc(100% - 10px), 50dvw);
 }
 #section button {
   display: flex;
