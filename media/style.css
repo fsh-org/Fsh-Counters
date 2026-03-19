@@ -34,11 +34,11 @@ hr {
   flex-wrap: wrap;
 }
 #section div {
-  position: relative;
   flex: 1 1 calc(25% - 5px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: min(10dvh, 200px);
   color: var(--txt);
   padding: 10px 0px;
@@ -47,35 +47,26 @@ hr {
 }
 #section .name {
   cursor: pointer;
-  position: absolute;
-  inset: unset 0px;
-  top: 6px;
 }
 #section .num {
   cursor: pointer;
-  position: absolute;
-  inset: unset 0px;
-  bottom: 10px;
   display: flex;
   max-width: 35%;
   font-family: monospace;
-  font-size: 175%;
+  font-size: 50px;
   font-weight: bold;
   overflow: hidden;
 }
 #section .num input {
-  font-size: 100%;
+  font-size: inherit;
   width: 100%;
   min-width: 0px;
   margin: 0px;
   padding: 0px;
+  outline: none;
 }
 #section .inline {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: min(calc(100% - 10px), 50dvw);
 }
 #section button {

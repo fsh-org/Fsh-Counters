@@ -13,15 +13,15 @@ function display() {
   section.innerHTML = counters
     .map(con=>`<div style="--color:${con.color.startsWith('#')?con.color:`var(--${con.color}-2)`};--txt:var(--${con.color.startsWith('#')?(bright(con.color)?'bg':'text'):'text'}-1);" data-id="${con.id}">
   <span class="name" role="button" tabindex="0">${con.name}</span>
-  <span class="num" role="button" tabindex="0">${con.num}</span>
   <span class="inline">
     <button class="down"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><rect y="103" width="256" height="50" rx="25"/></svg></button>
+    <span class="num" role="button" tabindex="0">${con.num}</span>
     <button class="up"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><rect x="103" width="50" height="256" rx="25"/><rect y="103" width="256" height="50" rx="25"/></svg></button>
   </span>
 </div>`)
     .join('');
   section.querySelectorAll('div').forEach(con=>{
-    let id = con.getAttribute('data-id');
+    let id = Number(con.getAttribute('data-id'));
     let counter = counters.find(c=>c.id===id);
     let down = con.querySelector('.down');
     let up = con.querySelector('.up');
@@ -68,7 +68,7 @@ function display() {
     };
     num.onclick = ()=>{
       if (num.innerHTML.includes('input')) return;
-      num.innerHTML = `<input type="num" value="${counter.num}" min="${counter.min}" max="${counter.max}">`;
+      num.innerHTML = `<input type="number" name="counter" autocomplete="off" value="${counter.num}"${counter.min?` min="${counter.min}"`:''}${counter.max?` max="${counter.max}"`:''}>`;
       let input = num.querySelector('input');
       input.select();
       input.onkeydown = (evt)=>{

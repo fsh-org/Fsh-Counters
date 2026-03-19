@@ -31,16 +31,16 @@
     <dialog id="dialog" closedby="any">
       <button onclick="this.parentElement.close()" class="modal-close">x</button>
       <h2>Edit</h2>
-      <label>Name: <input type="text" class="name"></label>
+      <label>Name: <input type="text" name="counter-name" class="name"></label>
       <br>
-      <label>Number: <input type="text" class="num"></label>
+      <label>Number: <input type="text" name="counter" autocomplete="off" class="num" pattern="^\d+$"></label>
       <br>
       <div class="con">
-        <label>Min: <input type="text" class="min"></label>
-        <label>Step: <input type="text" class="step"></label>
-        <label>Max: <input type="text" class="max"></label>
+        <label>Min: <input type="text" name="counter" autocomplete="off" class="min" pattern="^\d+$"></label>
+        <label>Step: <input type="text" name="counter" autocomplete="off" class="step" pattern="^\d+$"></label>
+        <label>Max: <input type="text" name="counter" autocomplete="off" class="max" pattern="^\d+$"></label>
       </div>
-      <label>Color: <input type="color" class="color"></label>
+      <label>Color: <input type="color" name="color" class="color"></label>
       <br>
       <button class="del">Delete</button>
     </dialog>
