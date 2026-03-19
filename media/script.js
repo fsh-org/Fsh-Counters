@@ -5,6 +5,7 @@ let dialog = document.getElementById('dialog');
 function bright(color) {
   let c = 0;
   if (parseInt(color.slice(1,3),16)>136) c++;
+  if (parseInt(color.slice(1,3),16)>220) c++;
   if (parseInt(color.slice(3,5),16)>200) c+=2;
   if (parseInt(color.slice(5,7),16)>136) c++;
   return c>1;
