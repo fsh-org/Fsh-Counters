@@ -82,6 +82,7 @@ function display() {
       };
     };
     name.onclick = ()=>{
+      let del = false;
       dialog.querySelector('.name').value = counter.name;
       dialog.querySelector('.num').value = counter.num;
       dialog.querySelector('.step').value = counter.step;
@@ -93,10 +94,13 @@ function display() {
         let tx = db.transaction(['counters'], 'readwrite');
         let cstore = tx.objectStore('counters');
         cstore.delete(counter.id);
+        del = true;
         dialog.close();
+        display();
       };
       dialog.showModal();
       dialog.onclose = ()=>{
+        if (del) return;
         counter.name = dialog.querySelector('.name').value;
         counter.num = BigInt(dialog.querySelector('.num').value);
         counter.step = BigInt(dialog.querySelector('.step').value);
