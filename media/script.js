@@ -12,7 +12,7 @@ function bright(color) {
 }
 function display() {
   section.innerHTML = counters
-    .map(con=>`<div style="--color:${con.color.startsWith('#')?con.color:`var(--${con.color}-2)`};--txt:var(--${con.color.startsWith('#')?(bright(con.color)?'bg':'text'):'text'}-1);" data-id="${con.id}">
+    .map(con=>`<div style="--color:${con.color.startsWith('#')?con.color:`var(--${con.color}-2)`};--txt:var(--${con.color.startsWith('#')?(bright(con.color)?'bg':'text'):(con.color.startsWith('white')?'bg':'text')}-1);" data-id="${con.id}">
   <span class="name" role="button" tabindex="0">${con.name}</span>
   <span class="inline">
     <button class="down"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><rect y="103" width="256" height="50" rx="25"/></svg></button>
@@ -32,8 +32,8 @@ function display() {
     let sep = 150;
     let debounce;
     let save = ()=>{
-      if (debounce) clearInterval(debounce);
-      debounce = setInterval(()=>{
+      if (debounce) clearTimeout(debounce);
+      debounce = setTimeout(()=>{
         debounce = null;
         let tx = db.transaction(['counters'], 'readwrite');
         let cstore = tx.objectStore('counters');
@@ -111,7 +111,7 @@ function display() {
     };
   });
 }
-const colors = 'red,yellow,green,blue,purple,black'.split(',');
+const colors = 'red,orange,yellow,green,blue,purple,white,black'.split(',');
 let coloridx = 0;
 add.onclick = ()=>{
   let obj = {
