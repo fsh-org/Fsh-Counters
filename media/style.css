@@ -63,16 +63,13 @@ hr {
   padding: 0px;
   outline: none;
 }
-#section button {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--txt);
   width: 30px;
   height: 30px;
-  border-color: currentColor;
+  border-color: var(--txt);
   border-radius: 2rem;
-}
 
 #dialog .con {
   display: flex;
